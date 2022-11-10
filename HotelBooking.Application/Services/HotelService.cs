@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using HotelBooking.Application.Base;
 using HotelBooking.Application.Services.Interfaces;
 using HotelBooking.Application.ViewModels;
@@ -53,20 +54,27 @@ namespace HotelBooking.Application.Services
         /// <returns></returns>
         public async Task<HotelVM?> Get(int hotelId)
         {
-            Hotel? entity = await this.UnitOfWork.Hotels.GetAll().FirstOrDefaultAsync(h => h.HotelId == hotelId);
+            var entity = await (from h in this.UnitOfWork.Hotels.GetAll()
+                                where h.HotelId == hotelId
+                                select new
+                                {
+                                    Hotel = h,
+                                    CountryName = (h.Country != null) ? h.Country.CountryName : string.Empty,
+                                    CountryCode = (h.Country != null) ? h.Country.Code : String.Empty,
+                                    CityName = (h.City != null) ? h.City.CityName : String.Empty
+                                }).FirstOrDefaultAsync();
 
             if (entity != null)
             {
-                HotelVM hotel = this.Mapper.Map<HotelVM>(entity);
-
-                hotel.CountryName = (entity.Country != null) ? entity.Country.CountryName : String.Empty;
-                hotel.CountryCode = (entity.Country != null) ? entity.Country.Code : String.Empty;
-                hotel.CityName = (entity.City != null) ? entity.City.CityName : String.Empty;
+                HotelVM hotel = this.Mapper.Map<HotelVM>(entity.Hotel);
+                hotel.CountryName = entity.CountryName;
+                hotel.CountryCode = entity.CountryCode;
+                hotel.CityName = entity.CityName;
 
                 return hotel;
             }
 
-            return null;
+            return null;          
         }
     }
 }

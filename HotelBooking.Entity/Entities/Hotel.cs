@@ -18,6 +18,8 @@ namespace HotelBooking.Entity.Entities
             this.HotelName = string.Empty;
             this.Description = string.Empty;
             this.Address = string.Empty;
+            this.Country = new Country();
+            this.City = new City();
         }
 
         /// <summary>
@@ -122,7 +124,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The country.
         /// </value>
-        public virtual Country? Country { get; set; }
+        public virtual Country Country { get; set; }
 
         /// <summary>
         /// Gets or sets the city.
@@ -130,7 +132,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The city.
         /// </value>
-        public virtual City? City { get; set; }
+        public virtual City City { get; set; }
 
         /// <summary>
         /// Gets or sets the facility.

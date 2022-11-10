@@ -10,9 +10,9 @@ namespace HotelBooking.Application.Services.Interfaces
         /// <summary>
         /// Gets the specified identifier.
         /// </summary>
-        /// <param name="id">The identifier.</param>
+        /// <param name="hotelId">The hotel identifier.</param>
         /// <returns></returns>
-        public Task<HotelVM?> Get(int id);
+        public Task<HotelVM?> Get(int hotelId);
 
         /// <summary>
         /// Creates the specified hotel.

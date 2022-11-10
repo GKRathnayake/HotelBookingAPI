@@ -1,5 +1,7 @@
 using AutoMapper;
 using HotelBooking.Application.Mapper;
+using HotelBooking.Application.Services;
+using HotelBooking.Application.Services.Interfaces;
 using HotelBooking.Infrastructure;
 using HotelBooking.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +29,14 @@ var mapperConfig = new MapperConfiguration(mc =>
 
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
+
+//
+//  Register services
+//
+builder.Services.AddScoped<IHotelService, HotelService>();
+//.AddScoped<IOrderService, OrderService>()
+//.AddScoped<IProductService, ProductService>()
+//.AddScoped<IInvoiceService, InvoiceService>();
 
 var app = builder.Build();
 
