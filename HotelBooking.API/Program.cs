@@ -1,3 +1,5 @@
+using AutoMapper;
+using HotelBooking.Application.Mapper;
 using HotelBooking.Infrastructure;
 using HotelBooking.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,15 @@ var connectionString = builder.Configuration.GetConnectionString("Hotel");
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+// Auto Mapper Configurations
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 
