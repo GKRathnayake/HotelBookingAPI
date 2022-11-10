@@ -14,7 +14,7 @@ namespace HotelBooking.Application.ViewModels
         /// </summary>
         public CityVM()
         {
-            this.Name = string.Empty;
+            this.CityName = string.Empty;
             this.CountryName = string.Empty;
             this.CountryCode = string.Empty;
         }
@@ -44,7 +44,7 @@ namespace HotelBooking.Application.ViewModels
         /// </value>
         [Required()]
         [MaxLength(400)]
-        public string Name { get; set; }
+        public string CityName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the country.

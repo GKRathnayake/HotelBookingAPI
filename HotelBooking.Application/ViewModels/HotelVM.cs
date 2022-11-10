@@ -14,7 +14,7 @@ namespace HotelBooking.Application.ViewModels
         /// </summary>
         public HotelVM()
         {
-            this.Name = string.Empty;
+            this.HotelName = string.Empty;
             this.Description = string.Empty;
             this.Address = string.Empty;
             this.CountryName = string.Empty;
@@ -39,7 +39,7 @@ namespace HotelBooking.Application.ViewModels
         /// </value>
         [Required()]
         [MaxLength(250)]
-        public string Name { get; set; }
+        public string HotelName { get; set; }
 
         /// <summary>
         /// Gets or sets the description.

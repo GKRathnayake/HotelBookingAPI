@@ -13,7 +13,7 @@ namespace HotelBooking.Entity.Entities
         /// </summary>
         public Country()
         {
-            this.Name = string.Empty;
+            this.CountryName = string.Empty;
             this.Code = string.Empty;
         }
 
@@ -35,7 +35,7 @@ namespace HotelBooking.Entity.Entities
         /// </value>
         [Required()]
         [MaxLength(500)]
-        public string Name { get; set; }
+        public string CountryName { get; set; }
 
         /// <summary>
         /// Gets or sets the country code.

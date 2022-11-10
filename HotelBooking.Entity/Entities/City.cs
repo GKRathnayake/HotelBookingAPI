@@ -14,7 +14,7 @@ namespace HotelBooking.Entity.Entities
         /// </summary>
         public City()
         {
-            this.Name = string.Empty;
+            this.CityName = string.Empty;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace HotelBooking.Entity.Entities
         /// </value>
         [Required()]
         [MaxLength(400)]
-        public string Name { get; set; }
+        public string CityName { get; set; }
 
         /// <summary>
         /// Gets or sets the country.

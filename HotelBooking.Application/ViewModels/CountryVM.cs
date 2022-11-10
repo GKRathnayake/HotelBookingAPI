@@ -12,7 +12,7 @@ namespace HotelBooking.Application.ViewModels
         /// </summary>
         public CountryVM()
         {
-            this.Name = string.Empty;
+            this.CountryName = string.Empty;
             this.Code = string.Empty;
         }
 
@@ -32,7 +32,7 @@ namespace HotelBooking.Application.ViewModels
         /// </value>
         [Required()]
         [MaxLength(500)]
-        public string Name { get; set; }
+        public string CountryName { get; set; }
 
         /// <summary>
         /// Gets or sets the country code.

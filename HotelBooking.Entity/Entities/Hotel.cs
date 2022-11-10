@@ -15,7 +15,7 @@ namespace HotelBooking.Entity.Entities
         /// </summary>
         public Hotel()
         {
-            this.Name = string.Empty;
+            this.HotelName = string.Empty;
             this.Description = string.Empty;
             this.Address = string.Empty;
         }
@@ -38,7 +38,7 @@ namespace HotelBooking.Entity.Entities
         /// </value>
         [Required()]
         [MaxLength(250)]
-        public string Name { get; set; }
+        public string HotelName { get; set; }
 
         /// <summary>
         /// Gets or sets the description.
