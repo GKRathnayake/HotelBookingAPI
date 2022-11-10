@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace HotelBooking.Infrastructure.Interfaces
 {
@@ -19,7 +20,7 @@ namespace HotelBooking.Infrastructure.Interfaces
         /// Gets entire collection of entities for further evaluation.
         /// </summary>
         /// <returns>Entire collection of entities.</returns>
-        IEnumerable<T> GetAll();
+        DbSet<T> GetAll();
 
         /// <summary>
         /// Adds the specified entity.

@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotelBooking.Entity.Entities;
 
 namespace HotelBooking.Infrastructure.Interfaces
 {
+    /// <summary>
+    /// Contract for UnitOfWork.
+    /// </summary>
+    /// <seealso cref="System.IDisposable" />
     public interface IUnitOfWork : IDisposable
     {
-        //IAdressRepository Address
-        //{
-        //    get;
-        //}
-        //IEmailRepository Email
-        //{
-        //    get;
-        //}
-        //IPersonRepository Person
-        //{
-        //    get;
-        //}
+        /// <summary>
+        /// Gets the hotel entity collection.
+        /// </summary>
+        /// <value>
+        /// The hotel entity collection.
+        /// </value>
+        IRepository<Hotel> Hotels { get; }
 
         /// <summary>
         /// Saves changes in to database.
         /// </summary>
         /// <returns></returns>
-        int Save();
+        Task<int> SaveChangesAsync();
     }
 }

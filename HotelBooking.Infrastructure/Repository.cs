@@ -33,7 +33,7 @@ namespace HotelBooking.Infrastructure
         /// <returns>
         /// Entire collection of entities.
         /// </returns>
-        public IEnumerable<T> GetAll()
+        public DbSet<T> GetAll()
         {
             return _entities;
         }
@@ -52,9 +52,9 @@ namespace HotelBooking.Infrastructure
         /// Adds the specified entity.
         /// </summary>
         /// <param name="entity">The entity to add.</param>
-        public void Add(T entity)
+        public async void Add(T entity)
         {
-            _entities.Add(entity);
+            await _entities.AddAsync(entity);
         }
 
         /// <summary>
@@ -64,6 +64,6 @@ namespace HotelBooking.Infrastructure
         public void Remove(T entity)
         {
             _entities.Remove(entity);
-        }       
+        }
     }
 }
