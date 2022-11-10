@@ -1,41 +1,56 @@
-﻿using HotelBooking.Infrastructure.Interfaces;
+﻿using HotelBooking.Entity.Entities;
+using HotelBooking.Infrastructure.Interfaces;
 
 namespace HotelBooking.Infrastructure
 {
+    /// <summary>
+    /// UnitOfWork class.
+    /// </summary>
+    /// <seealso cref="HotelBooking.Infrastructure.Interfaces.IUnitOfWork" />
     public class UnitOfWork : IUnitOfWork
     {
-        // private PeopleContext context;
+        /// <summary>
+        /// The context
+        /// </summary>
+        private readonly AppDbContext context;
 
-        public UnitOfWork(/*PeopleContext context*/)
+        /// <summary>
+        /// Gets the hotel entity collection.
+        /// </summary>
+        /// <value>
+        /// The hotel entity collection.
+        /// </value>
+        public IRepository<Hotel> Hotels
         {
-            //this.context = context;
-            //Address = new AddressRepository(this.context);
-            //Email = new EmailRepository(this.context);
-            //Person = new PersonRepository(this.context);
+            get;
+            private set;
         }
 
-        //public IAdressRepository Address
-        //{
-        //    get;
-        //    private set;
-        //}
-        //public IEmailRepository Email
-        //{
-        //    get;
-        //    private set;
-        //}
-        //public IPersonRepository Person
-        //{
-        //    get;
-        //    private set;
-        //}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        public UnitOfWork(AppDbContext context)
+        {
+            this.context = context;
+            Hotels = new Repository<Hotel>(context);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
-            // context.Dispose();
+            context.Dispose();
         }
-        public int Save()
+
+        /// <summary>
+        /// Saves changes in to database.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> SaveChangesAsync()
         {
-            return 0;// context.SaveChanges();
+            return await context.SaveChangesAsync();
         }
     }
 }
