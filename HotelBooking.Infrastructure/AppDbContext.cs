@@ -1,6 +1,8 @@
 ﻿using HotelBooking.Entity.Base;
 using HotelBooking.Entity.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.Extensions.Configuration;
 
 namespace HotelBooking.Infrastructure
 {
@@ -82,12 +84,28 @@ namespace HotelBooking.Infrastructure
         /// </value>
         public DbSet<RoomType> RoomTypes { get; set; }
 
+        public AppDbContext()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AppDbContext" /> class.
         /// </summary>
         /// <param name="options">The options.</param>
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var configuration = new ConfigurationBuilder()
+                        .SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+
+                var connectionString = configuration.GetConnectionString("Hotel");
+                optionsBuilder.UseSqlServer(connectionString);
+            }
         }
 
         /// <summary>
