@@ -33,6 +33,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The country name.
         /// </value>
+        [Required()]
+        [MaxLength(500)]
         public string Name { get; set; }
 
         /// <summary>
@@ -41,6 +43,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The country code.
         /// </value>
+        [Required()]
+        [MaxLength(10)] 
         public string Code { get; set; }
 
         /// <summary>
