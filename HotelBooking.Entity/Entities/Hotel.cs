@@ -141,5 +141,13 @@ namespace HotelBooking.Entity.Entities
         /// The facility.
         /// </value>
         public virtual ICollection<Facility>? Facilities { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reviews.
+        /// </summary>
+        /// <value>
+        /// The reviews.
+        /// </value>
+        public virtual ICollection<Review>? Reviews { get; set; }
     }
 }

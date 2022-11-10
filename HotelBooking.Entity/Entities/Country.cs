@@ -54,5 +54,13 @@ namespace HotelBooking.Entity.Entities
         /// The cities.
         /// </value>
         public virtual ICollection<City>? Cities { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hotels.
+        /// </summary>
+        /// <value>
+        /// The hotels.
+        /// </value>
+        public virtual ICollection<Hotel>? Hotels { get; set; }
     }
 }

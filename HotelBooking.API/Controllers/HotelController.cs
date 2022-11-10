@@ -23,7 +23,7 @@ namespace HotelBooking.API.Controllers
         protected readonly ILogger<HotelController> Logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HotelController"/> class.
+        /// Initializes a new instance of the <see cref="HotelController" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
@@ -34,11 +34,13 @@ namespace HotelBooking.API.Controllers
         }
 
         /// <summary>
-        /// Gets the specified hotel identifier.
+        /// Gets the hotel details by specified hotel identifier.
+        /// API for viewing details and info about a specific hotel
         /// </summary>
         /// <param name="hotelId">The hotel identifier.</param>
         /// <returns></returns>
-        [HttpGet(Name = "get-by-id")]
+        [HttpGet()]
+        [Route("get-by-id")]
         public async Task<HotelVM?> Get(int hotelId)
         {
             try
@@ -48,6 +50,28 @@ namespace HotelBooking.API.Controllers
             catch (Exception eX)
             {
                 this.Logger.LogError(eX, "Get");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Searches the hotels by specified criteria.
+        /// API for listing/searching for a hotel.
+        /// Search by City, Hotel name , Hotel Id and list all hotels.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns></returns>
+        [HttpPost()]
+        [Route("search")]
+        public async Task<SearchResultVM<HotelVM>?> Search(SearchRequestVM criteria)
+        {
+            try
+            {
+                return await this.Service.Search(criteria);
+            }
+            catch (Exception eX)
+            {
+                this.Logger.LogError(eX, "Search");
                 return null;
             }
         }

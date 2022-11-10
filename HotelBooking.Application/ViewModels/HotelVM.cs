@@ -146,5 +146,13 @@ namespace HotelBooking.Application.ViewModels
         /// The facilities.
         /// </value>
         public List<FacilityVM> Facilities { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reviews.
+        /// </summary>
+        /// <value>
+        /// The reviews.
+        /// </value>
+        public List<ReviewVM> Reviews { get; set; }
     }
 }

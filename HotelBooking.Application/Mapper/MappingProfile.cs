@@ -19,6 +19,8 @@ namespace HotelBooking.Application.Mapper
             CreateMap<HotelVM, Hotel>();
             CreateMap<Facility, FacilityVM>();
             CreateMap<FacilityVM, Facility>();
+            CreateMap<Review, ReviewVM>();
+            CreateMap<ReviewVM, Review>();
         }
     }
 }

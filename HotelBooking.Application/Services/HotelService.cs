@@ -6,9 +6,12 @@ using HotelBooking.Application.ViewModels;
 using HotelBooking.Entity.Entities;
 using HotelBooking.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,7 +64,9 @@ namespace HotelBooking.Application.Services
                                     Hotel = h,
                                     CountryName = (h.Country != null) ? h.Country.CountryName : string.Empty,
                                     CountryCode = (h.Country != null) ? h.Country.Code : String.Empty,
-                                    CityName = (h.City != null) ? h.City.CityName : String.Empty
+                                    CityName = (h.City != null) ? h.City.CityName : String.Empty,
+                                    Facilities = h.Facilities ?? new Facility[] { },
+                                    Reviews = h.Reviews ?? new Review[] { },
                                 }).FirstOrDefaultAsync();
 
             if (entity != null)
@@ -71,10 +76,93 @@ namespace HotelBooking.Application.Services
                 hotel.CountryCode = entity.CountryCode;
                 hotel.CityName = entity.CityName;
 
+                hotel.Facilities = (from fa in (from f in entity.Facilities
+                                                select new
+                                                {
+                                                    Facility = this.Mapper.Map<FacilityVM>(f)
+                                                })
+                                    select fa.Facility).ToList();
+
+                hotel.Reviews = (from fa in (from f in entity.Reviews
+                                             select new
+                                             {
+                                                 Review = this.Mapper.Map<ReviewVM>(f)
+                                             })
+                                 select fa.Review).ToList();
                 return hotel;
             }
 
-            return null;          
+            return null;
+        }
+
+        /// <summary>
+        /// Searches the specified criteria.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns></returns>
+        public async Task<SearchResultVM<HotelVM>?> Search(SearchRequestVM criteria)
+        {
+            SearchResultVM<HotelVM> result = new();
+
+            var query = from h in this.UnitOfWork.Hotels.GetAll()
+                        select new
+                        {
+                            Hotel = h,
+                            CountryName = (h.Country != null) ? h.Country.CountryName : string.Empty,
+                            CountryCode = (h.Country != null) ? h.Country.Code : String.Empty,
+                            CityName = (h.City != null) ? h.City.CityName : String.Empty,
+                            Facilities = h.Facilities ?? new Facility[] { }
+                        };
+
+            criteria.SearchText ??= string.Empty;
+            criteria.SearchText = criteria.SearchText.ToLower();
+
+            if (criteria.SearchFilter == SearchFilter.ById)
+            {
+                query = query.Where(q => q.Hotel.HotelId == criteria.ItemCode);
+            }
+            else if (criteria.SearchFilter == SearchFilter.ByTitle)
+            {
+                query = query.Where(q => q.Hotel.HotelName.ToLower().Contains(criteria.SearchText));
+            }
+            else if (criteria.SearchFilter == SearchFilter.ByCity)
+            {
+                query = query.Where(q => q.Hotel.CityId == criteria.CityId);
+            }
+            else if (criteria.SearchFilter == SearchFilter.ByMyLocation)
+            {
+                //
+                //  Search can be made based on users current location.
+                //  Search criteria has properties to store users current location info and
+                //  radius (distance). Those details will be useful for searching "hotels near by me".
+                //
+            }
+
+            var data = await (from q in query
+                              select new
+                              {
+                                  Hotel = this.Mapper.Map<HotelVM>(q.Hotel),
+                                  q.CountryName,
+                                  q.CountryCode,
+                                  q.CityName,
+                                  q.Facilities
+                              }).ToListAsync();
+
+            data.ForEach(d =>
+            {
+                d.Hotel.CountryName = d.CountryName;
+                d.Hotel.CountryCode = d.CountryCode;
+                d.Hotel.CityName = d.CityName;
+                d.Hotel.Facilities = (from fa in (from f in d.Facilities
+                                                  select new
+                                                  {
+                                                      Facility = this.Mapper.Map<FacilityVM>(f)
+                                                  })
+                                      select fa.Facility).ToList();
+            });
+
+            result.Items = (from d in data select d.Hotel).ToList();
+            return result;
         }
     }
 }
