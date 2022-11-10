@@ -8,6 +8,8 @@ namespace HotelBooking.Entity.Entities
     /// </summary>
     public class Facility
     {
+        #region [Constructor]
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Facility"/> class.
         /// </summary>
@@ -15,6 +17,10 @@ namespace HotelBooking.Entity.Entities
         {
             this.Description = string.Empty;
         }
+
+        #endregion
+
+        #region [Public Properties]
 
         /// <summary>
         /// Gets or sets the facility identifier.
@@ -42,6 +48,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The hotel.
         /// </value>
-        public virtual ICollection<Hotel>? Hotels { get; set; }
+        public virtual ICollection<Hotel>? Hotels { get; set; } 
+
+        #endregion
     }
 }

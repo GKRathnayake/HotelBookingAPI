@@ -7,21 +7,24 @@ using HotelBooking.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
+//
+//  Add services to the container.
+//
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
+//
+//  Fetch connection string from configuration files and introduce DbContext.
+//
 var connectionString = builder.Configuration.GetConnectionString("Hotel");
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));
-
+//
+//  Register UoW (for repository patter with EF.Core).
+//
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-
-// Auto Mapper Configurations
+//
+// Configure Auto Mapper and introduce Auto Mapper for DI.
+//
 var mapperConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new MappingProfile());
@@ -29,18 +32,16 @@ var mapperConfig = new MapperConfiguration(mc =>
 
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
-
 //
-//  Register services
+//  Register services for DI
 //
-builder.Services.AddScoped<IHotelService, HotelService>();
-//.AddScoped<IOrderService, OrderService>()
-//.AddScoped<IProductService, ProductService>()
-//.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<IHotelService, HotelService>()
+                .AddScoped<IBookingService, BookingService>();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
+//
+//  SConfigure the HTTP request pipeline.
+//
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -48,9 +49,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

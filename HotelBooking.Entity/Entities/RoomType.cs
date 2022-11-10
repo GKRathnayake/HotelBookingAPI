@@ -9,6 +9,8 @@ namespace HotelBooking.Entity.Entities
     /// </summary>
     public class RoomType : EntityBase
     {
+        #region [Constructor]
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RoomType"/> class.
         /// </summary>
@@ -16,6 +18,10 @@ namespace HotelBooking.Entity.Entities
         {
             this.Description = string.Empty;
         }
+
+        #endregion
+
+        #region [Public Properties]
 
         /// <summary>
         /// Gets or sets the room type identifier.
@@ -34,7 +40,7 @@ namespace HotelBooking.Entity.Entities
         /// The description.
         /// </value>
         [Required()]
-        [MaxLength(150)] 
+        [MaxLength(150)]
         public string Description { get; set; }
 
         /// <summary>
@@ -43,6 +49,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The rooms.
         /// </value>
-        public virtual ICollection<Room>? Rooms { get; set; }
+        public virtual ICollection<Room>? Rooms { get; set; } 
+
+        #endregion
     }
 }

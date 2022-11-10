@@ -8,8 +8,10 @@ namespace HotelBooking.Entity.Entities
     /// Room entity.
     /// </summary>
     /// <seealso cref="HotelBooking.Entity.Base.EntityBaseWithId" />
-    public class Room : EntityBaseWithId
+    public class Room : EntityBase
     {
+        #region [Constructor]
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Room" /> class.
         /// </summary>
@@ -17,6 +19,20 @@ namespace HotelBooking.Entity.Entities
         {
             this.RoomNumber = string.Empty;
         }
+
+        #endregion
+
+        #region [Public Properties]
+
+        /// <summary>
+        /// Gets or sets the room identifier.
+        /// </summary>
+        /// <value>
+        /// The room identifier.
+        /// </value>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int RoomId { get; set; }
 
         /// <summary>
         /// Gets or sets the room number.
@@ -35,7 +51,7 @@ namespace HotelBooking.Entity.Entities
         /// The hotel identifier.
         /// </value>
         [Required()]
-        [ForeignKey("Hotel")] 
+        [ForeignKey("Hotel")]
         public int HotelId { get; set; }
 
         /// <summary>
@@ -45,7 +61,7 @@ namespace HotelBooking.Entity.Entities
         /// The room type identifier.
         /// </value>
         [Required()]
-        [ForeignKey("RoomType")] 
+        [ForeignKey("RoomType")]
         public int RoomTypeId { get; set; }
 
         /// <summary>
@@ -55,6 +71,7 @@ namespace HotelBooking.Entity.Entities
         /// The price.
         /// </value>
         [Required()]
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Price { get; set; }
 
         /// <summary>
@@ -71,6 +88,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The type of the room.
         /// </value>
-        public virtual RoomType? RoomType { get; set; }
+        public virtual RoomType? RoomType { get; set; } 
+
+        #endregion
     }
 }

@@ -58,6 +58,14 @@ namespace HotelBooking.Application.ViewModels
         public int CityId { get; set; }
 
         /// <summary>
+        /// Gets or sets the type identifier.
+        /// </summary>
+        /// <value>
+        /// The type identifier.
+        /// </value>
+        public int TypeId { get; set; }
+
+        /// <summary>
         /// Gets or sets the longitude.
         /// </summary>
         /// <value>

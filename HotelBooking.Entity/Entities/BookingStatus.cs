@@ -10,13 +10,19 @@ namespace HotelBooking.Entity.Entities
     /// <seealso cref="HotelBooking.Entity.Base.EntityBase" />
     public class BookingStatus: EntityBase
     {
+        #region [Constructor]
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BookingStatus"/> class.
         /// </summary>
         public BookingStatus()
         {
             this.Description = string.Empty;
-        }
+        } 
+
+        #endregion
+
+        #region [Public Properties]
 
         /// <summary>
         /// Gets or sets the booking status identifier.
@@ -35,7 +41,7 @@ namespace HotelBooking.Entity.Entities
         /// The description.
         /// </value>
         [Required()]
-        [MaxLength(150)] 
+        [MaxLength(150)]
         public string Description { get; set; }
 
         /// <summary>
@@ -44,6 +50,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The bookings.
         /// </value>
-        public virtual ICollection<Booking>? Bookings { get; set; }
+        public virtual ICollection<Booking>? Bookings { get; set; } 
+
+        #endregion
     }
 }

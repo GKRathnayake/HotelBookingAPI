@@ -8,6 +8,8 @@ namespace HotelBooking.Entity.Entities
     /// </summary>
     public class Country
     {
+        #region [Constructor]
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Country"/> class.
         /// </summary>
@@ -16,6 +18,10 @@ namespace HotelBooking.Entity.Entities
             this.CountryName = string.Empty;
             this.Code = string.Empty;
         }
+
+        #endregion
+
+        #region [Public Properties]
 
         /// <summary>
         /// Gets or sets the country identifier.
@@ -44,7 +50,7 @@ namespace HotelBooking.Entity.Entities
         /// The country code.
         /// </value>
         [Required()]
-        [MaxLength(10)] 
+        [MaxLength(10)]
         public string Code { get; set; }
 
         /// <summary>
@@ -61,6 +67,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The hotels.
         /// </value>
-        public virtual ICollection<Hotel>? Hotels { get; set; }
+        public virtual ICollection<Hotel>? Hotels { get; set; } 
+
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using HotelBooking.Application.Services.Interfaces;
+﻿using HotelBooking.API.Base;
+using HotelBooking.Application.Services.Interfaces;
 using HotelBooking.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,30 +8,18 @@ namespace HotelBooking.API.Controllers
     /// <summary>
     /// Hotel Controller class.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// <seealso cref="HotelBooking.API.Base.BaseController&lt;HotelBooking.Application.Services.Interfaces.IHotelService, HotelBooking.API.Controllers.HotelController&gt;" />
     [Route("api/hotel")]
     [ApiController]
-    public class HotelController : ControllerBase
+    public class HotelController : BaseController<IHotelService, HotelController>
     {
-        /// <summary>
-        /// The service
-        /// </summary>
-        protected readonly IHotelService Service;
-
-        /// <summary>
-        /// The logger
-        /// </summary>
-        protected readonly ILogger<HotelController> Logger;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="HotelController" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="service">The service.</param>
-        public HotelController(ILogger<HotelController> logger, IHotelService service)
+        public HotelController(ILogger<HotelController> logger, IHotelService service) : base(logger, service)
         {
-            this.Logger = logger;
-            this.Service = service;
         }
 
         /// <summary>
@@ -41,16 +30,25 @@ namespace HotelBooking.API.Controllers
         /// <returns></returns>
         [HttpGet()]
         [Route("get-by-id")]
-        public async Task<HotelVM?> Get(int hotelId)
+        public async Task<ServiceResultVM<HotelVM>?> Get(int hotelId)
         {
             try
             {
-                return await this.Service.Get(hotelId);
+                if (hotelId <= 0) return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status400BadRequest };
+
+                ServiceResultVM<HotelVM>? result = await this.Service.Get(hotelId);
+
+                if (result == null) return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status500InternalServerError };
+                if (result.Items == null) return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status404NotFound };
+                if (result.Items.Count <= 0) return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status404NotFound };
+
+                result.StatusCode = StatusCodes.Status200OK;
+                return result;
             }
             catch (Exception eX)
             {
-                this.Logger.LogError(eX, "Get");
-                return null;
+                this.Logger.LogError(eX, "api/hotel/get-by-id");
+                return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status500InternalServerError };
             }
         }
 
@@ -63,16 +61,25 @@ namespace HotelBooking.API.Controllers
         /// <returns></returns>
         [HttpPost()]
         [Route("search")]
-        public async Task<SearchResultVM<HotelVM>?> Search(SearchRequestVM criteria)
+        public async Task<ServiceResultVM<HotelVM>?> Search(SearchRequestVM criteria)
         {
             try
             {
-                return await this.Service.Search(criteria);
+                if (criteria == null) return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status400BadRequest };
+
+                ServiceResultVM<HotelVM>? result = await this.Service.Search(criteria);
+
+                if (result == null) return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status500InternalServerError };
+                if (result.Items == null) return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status404NotFound };
+                if (result.Items.Count <= 0) return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status404NotFound };
+
+                result.StatusCode = StatusCodes.Status200OK;
+                return result;
             }
             catch (Exception eX)
             {
-                this.Logger.LogError(eX, "Search");
-                return null;
+                this.Logger.LogError(eX, "api/hotel/search");
+                return new ServiceResultVM<HotelVM>() { StatusCode = StatusCodes.Status500InternalServerError };
             }
         }
     }

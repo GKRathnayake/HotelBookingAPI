@@ -10,6 +10,8 @@ namespace HotelBooking.Entity.Entities
     /// <seealso cref="HotelBooking.Entity.Base.EntityBaseWithId" />
     public class Hotel : EntityBase
     {
+        #region [Constructor]
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Hotel" /> class.
         /// </summary>
@@ -18,9 +20,11 @@ namespace HotelBooking.Entity.Entities
             this.HotelName = string.Empty;
             this.Description = string.Empty;
             this.Address = string.Empty;
-            this.Country = new Country();
-            this.City = new City();
         }
+
+        #endregion
+
+        #region [Public Properties]
 
         /// <summary>
         /// Gets or sets the hotel identifier.
@@ -49,7 +53,7 @@ namespace HotelBooking.Entity.Entities
         /// The description.
         /// </value>
         [Required()]
-        [MaxLength(1000)] 
+        [MaxLength(1000)]
         public string Description { get; set; }
 
         /// <summary>
@@ -58,7 +62,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The longitude.
         /// </value>
-        [Required()] 
+        [Required()]
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Longitude { get; set; }
 
         /// <summary>
@@ -68,6 +73,7 @@ namespace HotelBooking.Entity.Entities
         /// The latitude.
         /// </value>
         [Required()]
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Latitude { get; set; }
 
         /// <summary>
@@ -77,7 +83,7 @@ namespace HotelBooking.Entity.Entities
         /// The country identifier.
         /// </value>
         [Required()]
-        [ForeignKey("Country")] 
+        [ForeignKey("Country")]
         public int CountryId { get; set; }
 
         /// <summary>
@@ -87,7 +93,7 @@ namespace HotelBooking.Entity.Entities
         /// The city identifier.
         /// </value>
         [Required()]
-        [ForeignKey("City")] 
+        [ForeignKey("City")]
         public int CityId { get; set; }
 
         /// <summary>
@@ -107,6 +113,7 @@ namespace HotelBooking.Entity.Entities
         /// The overall rating.
         /// </value>
         [Required()]
+        [Column(TypeName = "decimal(18,4)")]
         public decimal OverallRating { get; set; }
 
         /// <summary>
@@ -116,6 +123,7 @@ namespace HotelBooking.Entity.Entities
         /// The lowest room price.
         /// </value>
         [Required()]
+        [Column(TypeName = "decimal(18,4)")]
         public decimal LowestRoomPrice { get; set; }
 
         /// <summary>
@@ -148,6 +156,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The reviews.
         /// </value>
-        public virtual ICollection<Review>? Reviews { get; set; }
+        public virtual ICollection<Review>? Reviews { get; set; } 
+
+        #endregion
     }
 }

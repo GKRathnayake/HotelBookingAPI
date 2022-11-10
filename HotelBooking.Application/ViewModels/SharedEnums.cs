@@ -32,10 +32,40 @@
         ByCity = 3,
 
         /// <summary>
-        /// The by my location
+        /// Search by my location
         /// </summary>
         [EnumMember()]
-        ByMyLocation = 4
+        ByMyLocation = 4,
+
+        /// <summary>
+        /// Search by parent Id
+        /// </summary>
+        [EnumMember()]
+        ByParentId = 5,
+
+        /// <summary>
+        /// Search by parent Id and date range.
+        /// </summary>
+        [EnumMember()]
+        ByParentIdAndDateRange = 5,
+
+        /// <summary>
+        /// Search by parent Id, date range and category.
+        /// </summary>
+        [EnumMember()]
+        ByParentIdAndDateRangeAndCategory = 6,
+
+        /// <summary>
+        /// Search By Description
+        /// </summary>
+        [EnumMember()]
+        ByDescription = 7,
+
+        /// <summary>
+        /// Search By Address
+        /// </summary>
+        [EnumMember()]
+        ByAddress = 8
     };
 
 }

@@ -9,13 +9,19 @@ namespace HotelBooking.Entity.Entities
     /// </summary>
     public class City: EntityBase
     {
+        #region [Constructor]
+
         /// <summary>
         /// Initializes a new instance of the <see cref="City"/> class.
         /// </summary>
         public City()
         {
             this.CityName = string.Empty;
-        }
+        } 
+
+        #endregion
+
+        #region [Public Properties]
 
         /// <summary>
         /// Gets or sets the city identifier.
@@ -34,7 +40,7 @@ namespace HotelBooking.Entity.Entities
         /// The country identifier.
         /// </value>
         [Required()]
-        [ForeignKey("Country")] 
+        [ForeignKey("Country")]
         public int CountryId { get; set; }
 
         /// <summary>
@@ -61,6 +67,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The hotels.
         /// </value>
-        public virtual ICollection<Hotel>? Hotels { get; set; }
+        public virtual ICollection<Hotel>? Hotels { get; set; } 
+
+        #endregion
     }
 }

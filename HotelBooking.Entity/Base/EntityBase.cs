@@ -5,6 +5,8 @@
     /// </summary>
     public abstract class EntityBase
     {
+        #region [Public Properties]
+
         /// <summary>
         /// Gets or sets the updated date.
         /// </summary>
@@ -19,6 +21,8 @@
         /// <value>
         /// The created date.
         /// </value>
-        public virtual DateTime CreatedDate { get; set; }
+        public virtual DateTime CreatedDate { get; set; } 
+
+        #endregion
     }
 }

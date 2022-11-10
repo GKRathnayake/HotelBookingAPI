@@ -10,6 +10,8 @@ namespace HotelBooking.Entity.Entities
     /// <seealso cref="HotelBooking.Entity.Base.EntityBaseWithId" />
     public class Review : EntityBaseWithId
     {
+        #region [Constructor]
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Review"/> class.
         /// </summary>
@@ -17,6 +19,10 @@ namespace HotelBooking.Entity.Entities
         {
             this.Comment = string.Empty;
         }
+
+        #endregion
+
+        #region [Public Properties]
 
         /// <summary>
         /// Gets or sets the hotel identifier.
@@ -33,7 +39,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The user identifier.
         /// </value>
-        [Required()] 
+        [Required()]
         public int UserId { get; set; }
 
         /// <summary>
@@ -43,6 +49,7 @@ namespace HotelBooking.Entity.Entities
         /// The rating.
         /// </value>
         [Required()]
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Rating { get; set; }
 
         /// <summary>
@@ -52,7 +59,7 @@ namespace HotelBooking.Entity.Entities
         /// The comment.
         /// </value>
         [Required()]
-        [MaxLength(1500)] 
+        [MaxLength(1500)]
         public string Comment { get; set; }
 
         /// <summary>
@@ -61,6 +68,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The hotel.
         /// </value>
-        public virtual Hotel? Hotel { get; set; }
+        public virtual Hotel? Hotel { get; set; } 
+
+        #endregion
     }
 }

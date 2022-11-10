@@ -38,7 +38,7 @@ namespace HotelBooking.Application.Services
         /// </summary>
         /// <param name="hotel">The hotel.</param>
         /// <returns></returns>
-        public async Task<HotelVM?> Create(HotelVM hotel)
+        public async Task<ServiceResultVM<HotelVM>?> Create(HotelVM hotel)
         {
             Hotel entity = this.Mapper.Map<Hotel>(hotel);
 
@@ -55,7 +55,7 @@ namespace HotelBooking.Application.Services
         /// </summary>
         /// <param name="hotelId">The hotel identifier.</param>
         /// <returns></returns>
-        public async Task<HotelVM?> Get(int hotelId)
+        public async Task<ServiceResultVM<HotelVM>?> Get(int hotelId)
         {
             var entity = await (from h in this.UnitOfWork.Hotels.GetAll()
                                 where h.HotelId == hotelId
@@ -71,6 +71,8 @@ namespace HotelBooking.Application.Services
 
             if (entity != null)
             {
+                ServiceResultVM<HotelVM>? result = new();
+
                 HotelVM hotel = this.Mapper.Map<HotelVM>(entity.Hotel);
                 hotel.CountryName = entity.CountryName;
                 hotel.CountryCode = entity.CountryCode;
@@ -89,10 +91,13 @@ namespace HotelBooking.Application.Services
                                                  Review = this.Mapper.Map<ReviewVM>(f)
                                              })
                                  select fa.Review).ToList();
-                return hotel;
+
+                result.Items.Add(hotel);
+
+                return result;
             }
 
-            return null;
+            return new ServiceResultVM<HotelVM>();
         }
 
         /// <summary>
@@ -100,9 +105,9 @@ namespace HotelBooking.Application.Services
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns></returns>
-        public async Task<SearchResultVM<HotelVM>?> Search(SearchRequestVM criteria)
+        public async Task<ServiceResultVM<HotelVM>?> Search(SearchRequestVM criteria)
         {
-            SearchResultVM<HotelVM> result = new();
+            ServiceResultVM<HotelVM> result = new();
 
             var query = from h in this.UnitOfWork.Hotels.GetAll()
                         select new
@@ -114,20 +119,51 @@ namespace HotelBooking.Application.Services
                             Facilities = h.Facilities ?? new Facility[] { }
                         };
 
+            var qResult = from h in this.UnitOfWork.Hotels.GetAll()
+                          where h.HotelId == -1
+                          select new
+                          {
+                              Hotel = h,
+                              CountryName = (h.Country != null) ? h.Country.CountryName : string.Empty,
+                              CountryCode = (h.Country != null) ? h.Country.Code : String.Empty,
+                              CityName = (h.City != null) ? h.City.CityName : String.Empty,
+                              Facilities = h.Facilities ?? new Facility[] { }
+                          };
+
             criteria.SearchText ??= string.Empty;
             criteria.SearchText = criteria.SearchText.ToLower();
 
             if (criteria.SearchFilter == SearchFilter.ById)
             {
-                query = query.Where(q => q.Hotel.HotelId == criteria.ItemCode);
+                qResult = query.Where(q => q.Hotel.HotelId == criteria.ItemCode);
             }
             else if (criteria.SearchFilter == SearchFilter.ByTitle)
             {
-                query = query.Where(q => q.Hotel.HotelName.ToLower().Contains(criteria.SearchText));
+                // qResult = query.Where(q => q.Hotel.HotelName.ToLower().Contains(criteria.SearchText));
+                //
+                //  Utilizes SQL Server Full Text Search Compatibility.
+                //
+                qResult = query.Where(q => EF.Functions.Contains(q.Hotel.HotelName, criteria.SearchText) == true);
+            }
+            else if (criteria.SearchFilter == SearchFilter.ByDescription)
+            {
+                // qResult = query.Where(q => q.Hotel.Description.ToLower().Contains(criteria.SearchText));
+                //
+                //  Utilizes SQL Server Full Text Search Compatibility.
+                //
+                qResult = query.Where(q => EF.Functions.Contains(q.Hotel.Description, criteria.SearchText) == true);
+            }
+            else if (criteria.SearchFilter == SearchFilter.ByAddress)
+            {
+                // qResult = query.Where(q => q.Hotel.Address.ToLower().Contains(criteria.SearchText));
+                //
+                //  Utilizes SQL Server Full Text Search Compatibility.
+                //
+                qResult = query.Where(q => EF.Functions.Contains(q.Hotel.Address, criteria.SearchText) == true);
             }
             else if (criteria.SearchFilter == SearchFilter.ByCity)
             {
-                query = query.Where(q => q.Hotel.CityId == criteria.CityId);
+                qResult = query.Where(q => q.Hotel.CityId == criteria.CityId);
             }
             else if (criteria.SearchFilter == SearchFilter.ByMyLocation)
             {
@@ -138,7 +174,7 @@ namespace HotelBooking.Application.Services
                 //
             }
 
-            var data = await (from q in query
+            var data = await (from q in qResult
                               select new
                               {
                                   Hotel = this.Mapper.Map<HotelVM>(q.Hotel),

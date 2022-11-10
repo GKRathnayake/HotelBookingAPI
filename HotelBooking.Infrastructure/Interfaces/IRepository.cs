@@ -9,6 +9,8 @@ namespace HotelBooking.Infrastructure.Interfaces
     /// <typeparam name="T">Type of the entity</typeparam>
     public interface IRepository<T> where T : class
     {
+        #region [Method Definitions]
+
         /// <summary>
         /// Finds the specified item/ items by given criteria..
         /// </summary>
@@ -32,6 +34,8 @@ namespace HotelBooking.Infrastructure.Interfaces
         /// Removes the specified entity.
         /// </summary>
         /// <param name="entity">The entity to remove.</param>
-        void Remove(T entity);
+        void Remove(T entity); 
+
+        #endregion
     }
 }

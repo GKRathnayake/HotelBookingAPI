@@ -65,7 +65,7 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
@@ -74,6 +74,8 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BookingStatusId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Bookings");
                 });
@@ -205,16 +207,16 @@ namespace HotelBooking.Infrastructure.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<decimal>("Latitude")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Longitude")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("LowestRoomPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("OverallRating")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -248,7 +250,7 @@ namespace HotelBooking.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -265,11 +267,11 @@ namespace HotelBooking.Infrastructure.Migrations
 
             modelBuilder.Entity("HotelBooking.Entity.Entities.Room", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RoomId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -278,7 +280,7 @@ namespace HotelBooking.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("RoomNumber")
                         .IsRequired()
@@ -291,7 +293,7 @@ namespace HotelBooking.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("RoomId");
 
                     b.HasIndex("HotelId");
 
@@ -347,7 +349,15 @@ namespace HotelBooking.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HotelBooking.Entity.Entities.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("BookingStatus");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HotelBooking.Entity.Entities.City", b =>

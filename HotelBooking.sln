@@ -5,11 +5,16 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBooking.API", "HotelBooking.API\HotelBooking.API.csproj", "{281A3A9E-CB87-48F9-903F-21D18BE18A0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooking.Application", "HotelBooking.Application\HotelBooking.Application.csproj", "{F1353454-2E60-4B16-BAC8-5304B1705612}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBooking.Application", "HotelBooking.Application\HotelBooking.Application.csproj", "{F1353454-2E60-4B16-BAC8-5304B1705612}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooking.Entity", "HotelBooking.Entity\HotelBooking.Entity.csproj", "{72003AEC-826F-4983-9DF8-E3F38D4EA405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBooking.Entity", "HotelBooking.Entity\HotelBooking.Entity.csproj", "{72003AEC-826F-4983-9DF8-E3F38D4EA405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooking.Infrastructure", "HotelBooking.Infrastructure\HotelBooking.Infrastructure.csproj", "{3594313F-79D8-408B-B0A1-17AB0BB8D30C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBooking.Infrastructure", "HotelBooking.Infrastructure\HotelBooking.Infrastructure.csproj", "{3594313F-79D8-408B-B0A1-17AB0BB8D30C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F4973B18-56E2-4450-9366-CE5085A4BCEB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

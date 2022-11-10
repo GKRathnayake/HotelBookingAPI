@@ -6,17 +6,21 @@ namespace HotelBooking.Infrastructure
 {
     /// <summary>
     /// Generic repository calss.
-    /// Super class for all the repositories.
     /// </summary>
     /// <typeparam name="T">Type of the entity.</typeparam>
-    /// <seealso cref="HotelBooking.Domain.Interfaces.IRepository&lt;T&gt;" />
-    /// <seealso cref="HotelBooking.Domain.Interfaces.IRepository&lt;T&gt;" />
+    /// <seealso cref="HotelBooking.Infrastructure.Interfaces.IRepository&lt;T&gt;" />
     public class Repository<T> : IRepository<T> where T : class
     {
+        #region [Private Fields]
+
         /// <summary>
         /// The entities
         /// </summary>
-        protected readonly DbSet<T> _entities;
+        private readonly DbSet<T> _entities;
+
+        #endregion
+
+        #region [Constructor]
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Repository{T}"/> class.
@@ -26,6 +30,10 @@ namespace HotelBooking.Infrastructure
         {
             _entities = context.Set<T>();
         }
+
+        #endregion
+
+        #region [Public Methods]
 
         /// <summary>
         /// Gets entire collection of entities for further evaluation.
@@ -65,5 +73,7 @@ namespace HotelBooking.Infrastructure
         {
             _entities.Remove(entity);
         }
+
+        #endregion
     }
 }

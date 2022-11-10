@@ -9,6 +9,8 @@ namespace HotelBooking.Entity.Base
     /// <seealso cref="HotelBooking.Entity.Base.EntityBase" />
     public abstract class EntityBaseWithId: EntityBase
     {
+        #region [Public Properties]
+
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
@@ -17,6 +19,8 @@ namespace HotelBooking.Entity.Base
         /// </value>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public virtual int Id { get; set; }
+        public virtual int Id { get; set; } 
+
+        #endregion
     }
 }

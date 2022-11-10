@@ -10,13 +10,19 @@ namespace HotelBooking.Entity.Entities
     /// <seealso cref="HotelBooking.Entity.Base.EntityBaseWithId" />
     public class Booking : EntityBaseWithId
     {
+        #region [Constructor]
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Booking"/> class.
         /// </summary>
         public Booking()
         {
             this.AdditionalInstructions = string.Empty;
-        }
+        } 
+
+        #endregion
+
+        #region [Public Properties]
 
         /// <summary>
         /// Gets or sets the room identifier.
@@ -25,7 +31,7 @@ namespace HotelBooking.Entity.Entities
         /// The room identifier.
         /// </value>
         [ForeignKey("Room")]
-        public int? RoomId { get; set; }
+        public int RoomId { get; set; }
 
         /// <summary>
         /// Gets or sets the checkin date.
@@ -33,7 +39,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The checkin date.
         /// </value>
-        [Required()] 
+        [Required()]
         public DateTime CheckinDate { get; set; }
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The customer identifier.
         /// </value>
-        [Required()] 
+        [Required()]
         public int CustomerId { get; set; }
 
         /// <summary>
@@ -60,7 +66,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The additional instructions.
         /// </value>
-        [MaxLength(1000)] 
+        [MaxLength(1000)]
         public string AdditionalInstructions { get; set; }
 
         /// <summary>
@@ -70,7 +76,7 @@ namespace HotelBooking.Entity.Entities
         /// The booking status identifier.
         /// </value>
         [Required()]
-        [ForeignKey("BookingStatus")] 
+        [ForeignKey("BookingStatus")]
         public int BookingStatusId { get; set; }
 
         /// <summary>
@@ -79,6 +85,16 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The booking status.
         /// </value>
-        public virtual BookingStatus? BookingStatus { get; set; }
+        public virtual BookingStatus BookingStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the room.
+        /// </summary>
+        /// <value>
+        /// The room.
+        /// </value>
+        public virtual Room Room { get; set; } 
+
+        #endregion
     }
 }

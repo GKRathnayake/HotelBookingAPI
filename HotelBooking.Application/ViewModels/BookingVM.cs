@@ -15,7 +15,7 @@ namespace HotelBooking.Application.ViewModels
         public BookingVM()
         {
             this.AdditionalInstructions = string.Empty;
-            this.BookingStatus = string.Empty;
+            this.BookingStatusDescription = string.Empty;
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace HotelBooking.Application.ViewModels
         /// <value>
         /// The room identifier.
         /// </value>
-        public int? RoomId { get; set; }
+        public int RoomId { get; set; }
 
         /// <summary>
         /// Gets or sets the checkin date.
@@ -72,11 +72,27 @@ namespace HotelBooking.Application.ViewModels
         public int BookingStatusId { get; set; }
 
         /// <summary>
-        /// Gets or sets the booking status.
+        /// Gets or sets the booking status descriptio.
         /// </summary>
         /// <value>
         /// The booking status.
         /// </value>
-        public string BookingStatus { get; set; }
+        public string BookingStatusDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hotel identifier.
+        /// </summary>
+        /// <value>
+        /// The hotel identifier.
+        /// </value>
+        public int HotelId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the room type identifier.
+        /// </summary>
+        /// <value>
+        /// The room type identifier.
+        /// </value>
+        public int RoomTypeId { get; set; }
     }
 }
