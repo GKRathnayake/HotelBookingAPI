@@ -33,6 +33,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The description.
         /// </value>
+        [Required()]
+        [MaxLength(150)] 
         public string Description { get; set; }
 
         /// <summary>

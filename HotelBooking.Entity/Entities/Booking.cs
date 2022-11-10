@@ -1,4 +1,5 @@
 ﻿using HotelBooking.Entity.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelBooking.Entity.Entities
@@ -32,6 +33,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The checkin date.
         /// </value>
+        [Required()] 
         public DateTime CheckinDate { get; set; }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The checkout date.
         /// </value>
+        [Required()]
         public DateTime CheckoutDate { get; set; }
 
         /// <summary>
@@ -48,6 +51,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The customer identifier.
         /// </value>
+        [Required()] 
         public int CustomerId { get; set; }
 
         /// <summary>
@@ -56,6 +60,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The additional instructions.
         /// </value>
+        [MaxLength(1000)] 
         public string AdditionalInstructions { get; set; }
 
         /// <summary>
@@ -64,7 +69,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The booking status identifier.
         /// </value>
-        [ForeignKey("BookingStatus")]
+        [Required()]
+        [ForeignKey("BookingStatus")] 
         public int BookingStatusId { get; set; }
 
         /// <summary>

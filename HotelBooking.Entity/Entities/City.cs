@@ -15,7 +15,6 @@ namespace HotelBooking.Entity.Entities
         public City()
         {
             this.Name = string.Empty;
-            this.Code = string.Empty;
         }
 
         /// <summary>
@@ -34,6 +33,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The country identifier.
         /// </value>
+        [Required()]
         [ForeignKey("Country")] 
         public int CountryId { get; set; }
 
@@ -43,15 +43,9 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The city name.
         /// </value>
+        [Required()]
+        [MaxLength(400)]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the country code.
-        /// </summary>
-        /// <value>
-        /// The country code.
-        /// </value>
-        public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets the country.

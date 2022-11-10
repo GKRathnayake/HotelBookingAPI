@@ -1,4 +1,5 @@
 ﻿using HotelBooking.Entity.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelBooking.Entity.Entities
@@ -23,6 +24,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The room number.
         /// </value>
+        [Required()]
+        [MaxLength(10)]
         public string RoomNumber { get; set; }
 
         /// <summary>
@@ -31,7 +34,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The hotel identifier.
         /// </value>
-        [ForeignKey("Hotel")]
+        [Required()]
+        [ForeignKey("Hotel")] 
         public int HotelId { get; set; }
 
         /// <summary>
@@ -40,7 +44,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The room type identifier.
         /// </value>
-        [ForeignKey("RoomType")]
+        [Required()]
+        [ForeignKey("RoomType")] 
         public int RoomTypeId { get; set; }
 
         /// <summary>
@@ -49,6 +54,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The price.
         /// </value>
+        [Required()]
         public decimal Price { get; set; }
 
         /// <summary>

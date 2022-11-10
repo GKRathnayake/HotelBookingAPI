@@ -1,4 +1,5 @@
 ﻿using HotelBooking.Entity.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelBooking.Entity.Entities
@@ -32,6 +33,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The user identifier.
         /// </value>
+        [Required()] 
         public int UserId { get; set; }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The rating.
         /// </value>
+        [Required()]
         public decimal Rating { get; set; }
 
         /// <summary>
@@ -48,6 +51,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The comment.
         /// </value>
+        [Required()]
+        [MaxLength(1500)] 
         public string Comment { get; set; }
 
         /// <summary>

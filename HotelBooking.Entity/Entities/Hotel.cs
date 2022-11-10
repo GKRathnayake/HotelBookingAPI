@@ -36,6 +36,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The hotel name.
         /// </value>
+        [Required()]
+        [MaxLength(250)]
         public string Name { get; set; }
 
         /// <summary>
@@ -44,6 +46,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The description.
         /// </value>
+        [Required()]
+        [MaxLength(1000)] 
         public string Description { get; set; }
 
         /// <summary>
@@ -52,6 +56,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The longitude.
         /// </value>
+        [Required()] 
         public decimal Longitude { get; set; }
 
         /// <summary>
@@ -60,6 +65,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The latitude.
         /// </value>
+        [Required()]
         public decimal Latitude { get; set; }
 
         /// <summary>
@@ -68,7 +74,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The country identifier.
         /// </value>
-        [ForeignKey("Country")]
+        [Required()]
+        [ForeignKey("Country")] 
         public int CountryId { get; set; }
 
         /// <summary>
@@ -77,7 +84,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The city identifier.
         /// </value>
-        [ForeignKey("City")]
+        [Required()]
+        [ForeignKey("City")] 
         public int CityId { get; set; }
 
         /// <summary>
@@ -86,6 +94,8 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The address.
         /// </value>
+        [Required()]
+        [MaxLength(400)]
         public string Address { get; set; }
 
         /// <summary>
@@ -94,6 +104,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The overall rating.
         /// </value>
+        [Required()]
         public decimal OverallRating { get; set; }
 
         /// <summary>
@@ -102,6 +113,7 @@ namespace HotelBooking.Entity.Entities
         /// <value>
         /// The lowest room price.
         /// </value>
+        [Required()]
         public decimal LowestRoomPrice { get; set; }
 
         /// <summary>
